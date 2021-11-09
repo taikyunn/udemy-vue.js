@@ -12,12 +12,12 @@
     <LikeHeader></LikeHeader>
     <h1>{{ number }}</h1>
 
-    <!-- 親コンポーネントから子コンポーネントに値を渡すには属性名('子コンポーネントで定義した値')で渡すことができる -->
+    <!-- 親コンポーネントから子コンポーネントに値を渡すには属性名(子コンポーネントで定義した値)='$dataの値'で渡すことができる -->
     <!-- 値を動的に渡すにはv-bind(省略形 :)で渡すと動的に渡せる-->
 
     <!-- propsはケバブケース推奨 -->
-    <LikeNumber :totalNumber='number'></LikeNumber>
-    <LikeNumber :total-number='number'></LikeNumber>
+    <LikeNumber :total-number='number' ></LikeNumber>
+    <LikeNumber :total-number='number' ></LikeNumber>
     <!-- パスカルケースで指定したものは、ケバブケースでも表現できる -->
     <!-- htmlはカバブケースでかく -->
     <!-- なぜならブラウザは大文字と小文字の区別ができないから -->
@@ -27,6 +27,11 @@
     <!-- キャメルケースも使えるけど、基本パスカルケースで作成すること -->
 
      <!-- App.vueからするとLikeHeader,LikeNumberともの子コンポーネント -->
+
+      <!-- 子コンポーネントから値を取得する側-->
+      <!-- v-on:子コンポーネントで指定した値="$event" で取得できる-->
+     <LikeNumber :total-number='number' v-on:my-click="number"></LikeNumber>
+     <LikeNumber :total-number='number' @my-click="increamentNumber"></LikeNumber>
   </div>
 </template>
 
@@ -44,6 +49,12 @@ export default {
     LikeHeader : LikeHeader
     // 上:ES5 下：ES6の書き方
     // LikeHeader
+  },
+  methods: {
+    increamentNumber(value) {
+      // valueはmy-clickイベントの値が入る
+      this.number = value;
+    }
   }
 }
 </script>
